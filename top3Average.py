@@ -20,23 +20,33 @@ def top3Average(scores: List[int]) -> float:
                     max3 = score
 
         average:float = (max1 + max2 + max3) / 3
+        rounded_avg = round(average, 2)
         print(average)
+        print(rounded_avg)
         return average
+    
+    # if the array is empty
+    elif len(scores) == 0:
+        print(0)
+        return 0
+    
+
     else:
         sum:float = 0
         for score in scores:
             sum += score
 
         average = sum / len(scores)
+        rounded_avg = round(average, 2)
         print(average)
+        print(rounded_avg)
         return average
 
 
-scores = [10, 80, 90, 50, 95]
+# scores = [10, 80, 90, 50, 95]
 # scores = [100, 100, 100]
 # scores = [70, 80]
 # scores = [55]
-
-
+scores = []
 
 top3Average(scores)
