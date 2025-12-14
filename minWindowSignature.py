@@ -2,26 +2,36 @@ from typing import List
 
 def minWindowSignature(log: str, pattern: str) -> str:
     # write your code here ^_^
-    log_counter:int = 0
-
     # split strings into lists to help find min window
     log_list = list(log)
     pattern_list = list(pattern)
 
-    min_window = check_for_window(log_list, pattern_list)
-    print("min window:", min_window)
+    all_windows:list = extract_all_windows(log_list, pattern_list)
     return ""
 
+
+def extract_all_windows(log_list:list, pattern_list:list) -> list:
+    """ extract all windows then return it as list """
+    windows_collection:list = []
+    is_log_finished:bool = False
+    log_len:int = len(log_list)
+    pattern_len:int = len(pattern_list)
+    log_counter:int = 0
+
+    while log_counter < log_len:
+        # check for window starting from specific emelent (log_counter)
+        windows_collection.append(check_for_window(log_list[log_counter:], pattern_list))
+        log_counter += 1
+    
+    print("all windows: ", windows_collection)
+    return windows_collection
 
 
 def check_for_window(log_list:list, pattern_list: list) -> str:
     """ loop through log and extract a window """
-    is_started = False
-    is_log_finished = False
-    log_len = len(log_list)
-    pattern_len = len(pattern_list)
-    window_start = 0
-    window_end = 0
+    is_started:bool = False
+    window_start:int = 0
+    window_end:int = 0
     # create a copy of pattern_list using slicing
     pattern_copy = pattern_list[:]
 
@@ -46,7 +56,7 @@ def check_for_window(log_list:list, pattern_list: list) -> str:
                 return window_str
 
 
-
+# main
 log = "ADOBECODEBANC"
 pattern = "ABC"
 
