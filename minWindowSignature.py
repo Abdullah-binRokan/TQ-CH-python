@@ -8,7 +8,9 @@ def minWindowSignature(log: str, pattern: str) -> str:
 
     all_windows:list = extract_all_windows(log_list, pattern_list)
     min_window:str = extract_min_window(all_windows)
-    return ""
+    print("---------------- all_windows ---------------", all_windows)
+    print("---------------- min_window ---------------", min_window)
+    return min_window
 
 
 def extract_min_window(all_windows:list) -> str:
@@ -30,9 +32,11 @@ def extract_min_window(all_windows:list) -> str:
             print("min_window_index", min_window_index)
             print("--------------------------------")
 
-    print("???????????????")
-    print("min_window_index: ", min_window_index)
-    print("???????????????")
+    # return the min window if there is none return empty string
+    try:
+        return all_windows[min_window_index]
+    except:
+        return ""
 
 def extract_all_windows(log_list:list, pattern_list:list) -> list:
     """ extract all windows then return it as a list """
@@ -90,8 +94,8 @@ def check_for_window(log_list:list, pattern_list: list) -> str:
 
 # main
 # log = "ADOBECODEBANC"
-log = "ADOBECODEBANCADOBEC"
-# log = "ADOBE"
+# log = "ADOBECODEBANCADOBEC"
+log = "ADOBE"
 pattern = "ABC"
 
 print("calling minWindow")
