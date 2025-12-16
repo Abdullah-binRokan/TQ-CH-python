@@ -95,7 +95,8 @@ def check_for_window(log_list:list, pattern_list: list) -> str:
 # main
 # log = "ADOBECODEBANC"
 # log = "ADOBECODEBANCADOBEC"
-log = "ADOBE"
+# log = "ADOBE"
+log = ""
 pattern = "ABC"
 
 print("calling minWindow")
