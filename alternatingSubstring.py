@@ -23,6 +23,8 @@ def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
     i = 0
     # avoid not having a pair of two elements at the end of list
     while i <= digits_length - 2:
+        # check if the substring pairs started with odd num but the current first digit not odd or vice versa
+        started_diffrent_than_current =  (is_odd_started and not is_odd(digits[i]) or (not is_odd_started and is_odd(digits[i])))
         print(f" i: {i},  1st: {digits[i]}, 2nd: {digits[i + 1]}")
         # check if alternated substring is going to start
         if not is_started and are_alternated(digits[i], digits[i + 1]):
@@ -30,14 +32,24 @@ def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
             is_started = True
             is_odd_started = True if int(digits[i]) % 2 != 0 else False
             print("start_index: ", start_index)
-        # check if the substring not initiated with odd num or the current digit is not odd  
-        elif not is_odd_started or not is_odd(digits[i]):
+        # check if alternated substring ended
+        elif is_started and (started_diffrent_than_current or not are_alternated(digits[i], digits[i + 1])):
+            end_index = i
             print("is_odd: ", is_odd(digits[i]))
+            print("end_index: ", end_index)
+            print("************")
+            # todo: fix slicing the next item if it alternates with end_index
+            print(digits[start_index : end_index])
+            print("************")
+            # reset the variables to enable extracting remaining alternating substring
+            is_started = False
+            is_odd_started = False
         
-        # avoid not having a pair of two elements at the end of list
-        if digits_length - i == 3:
+        # avoid not having a pair of two elements at the end of list or jumping from alternated pair
+        if digits_length - i == 3 or not are_alternated(digits[i], digits[i + 1]):
             i += 1
         else:
+            # we have alternated pair so we can jump one iteration and compare with next pair
             i += 2
 
 
@@ -64,7 +76,9 @@ def is_odd(num: str) -> bool:
     return True if int_num % 2 != 0 else False
 
 # digits = "2105787220351146"
-digits = "12057872203511461"
+# digits = "12057872203511461"
+digits = "12357872203511461"
+# digits = "21457872203511461"
 # digits = "213"
 
 longest_alternating_substring(digits)
