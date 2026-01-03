@@ -24,7 +24,7 @@ def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
     # avoid not having a pair of two elements at the end of list
     while i <= digits_length - 2:
         # check if the substring pairs started with odd num but the current first digit not odd or vice versa
-        started_diffrent_than_current =  (is_odd_started and not is_odd(digits[i]) 
+        started_different_than_current =  (is_odd_started and not is_odd(digits[i]) 
                                           or (not is_odd_started and is_odd(digits[i])))
         print(f" i: {i},  1st: {digits[i]}, 2nd: {digits[i + 1]}")
         # check if alternated substring is going to start
@@ -34,26 +34,29 @@ def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
             is_odd_started = True if int(digits[i]) % 2 != 0 else False
             print("start_index: ", start_index)
         # check if alternated substring ended
-        elif is_started and (started_diffrent_than_current or not are_alternated(digits[i], digits[i + 1])):
+        elif is_started and (started_different_than_current or not are_alternated(digits[i], digits[i + 1])):
             end_index = i
             print("is_odd: ", is_odd(digits[i]))
             print("end_index: ", end_index)
-            # Slicing the next item if it alternates with end_index
-            if started_diffrent_than_current:
-                alternating_list.append(digits[start_index : end_index]) 
-            else:
-                alternating_list.append(digits[start_index : end_index + 1])
-            print("************")
-            print(alternating_list)
-            print("************")
+            # call slicing function
+            slice_alternated(start_index, end_index, alternating_list, started_different_than_current)
 
             # reset the variables to enable extracting remaining alternating substring
             is_started = False
             is_odd_started = False
         
-        # todo fix jumping new alternated pairs if we ending endex
+        # avoid jumping new alternated pairs if we ending endex
+        if are_alternated(digits[i], digits[i + 1]) and (end_index == i and end_index > 0) and start_index != i:
+            # run the loop with same counter to start extracting the current alternated substring
+            i += 0
+        # avoid missing alternated substring if we reached last pair
+        elif digits_length - i == 2 and is_started:
+            print("catch ending index: ", i + 1)
+            end_index = i + 1
+            slice_alternated(start_index, end_index, alternating_list, started_different_than_current)
+            i+= 1
         # avoid not having a pair of two elements at the end of list or jumping from alternated pair
-        if digits_length - i == 3 or not are_alternated(digits[i], digits[i + 1]):
+        elif digits_length - i == 3 or not are_alternated(digits[i], digits[i + 1]):
             i += 1
         else:
             # we have alternated pair so we can jump one iteration and compare with next pair
@@ -62,6 +65,21 @@ def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
 
 # define find_longest function to find the longest substring from a list of substrings
 
+
+# define function to slice the alternated substring 
+def slice_alternated(start_index: int, end_index: int, alternating_list: list, started_different_than_current: bool ):
+    """ slice the alternated substring then append it to the list """
+    # include end index since it is only 2 elements
+    if end_index - start_index < 2:
+        alternating_list.append(digits[start_index : end_index + 1])
+    # Slicing the next item if it alternates with end_index
+    elif started_different_than_current:
+        alternating_list.append(digits[start_index : end_index]) 
+    else:
+        alternating_list.append(digits[start_index : end_index + 1])
+    print("************")
+    print(alternating_list)
+    print("************")
 
 # define function to check if two numbers are alternated
 def are_alternated(first_num: str, second_num: str) -> bool:
@@ -82,10 +100,14 @@ def is_odd(num: str) -> bool:
     int_num: int = int(num)
     return True if int_num % 2 != 0 else False
 
-digits = "2105787220351146"
-# digits = "12057872203511461"
+# digits = "2105787220351146"
+digits = "12057872203511461"
 # digits = "12357872203511461"
 # digits = "21457872203511461"
 # digits = "213"
+# digits = "2131"
+# digits = "21"
+# digits = "1"
+# digits = ""
 
 longest_alternating_substring(digits)

@@ -14,7 +14,7 @@ def create_list(num:int) -> List[int]:
     if num <= 3:
         return [0]
     else:
-        # start from num-3 untill 0 with step -3s
+        # start from num-3 untill 0 with step -3
         for i in range(num-3, 0, -3):
             new_list.append(i)
         return new_list
