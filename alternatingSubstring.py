@@ -9,7 +9,10 @@ def longest_alternating_substring(digits: str) -> str:
     extract_alternating_substrings(alternating_list, digits)
 
     # call find_longest to get the longest substring from alternating_list
+    longest_substring: str = find_longest_substring(alternating_list)
 
+    print("longest: ", longest_substring)
+    return longest_substring
 
 # define extract_alternating_substrings function to extract alternating substrings
 def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
@@ -64,7 +67,14 @@ def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
 
 
 # define find_longest function to find the longest substring from a list of substrings
+def find_longest_substring(alternating_list: list) -> str:
+    """ find longest substring """
+    longest_str: str = ""
+    for i in alternating_list:
+        if len(i) > len(longest_str):
+            longest_str = i
 
+    return longest_str
 
 # define function to slice the alternated substring 
 def slice_alternated(start_index: int, end_index: int, alternating_list: list, started_different_than_current: bool ):
@@ -100,8 +110,8 @@ def is_odd(num: str) -> bool:
     int_num: int = int(num)
     return True if int_num % 2 != 0 else False
 
-# digits = "2105787220351146"
-digits = "12057872203511461"
+digits = "2105787220351146"
+# digits = "12057872203511461"
 # digits = "12357872203511461"
 # digits = "21457872203511461"
 # digits = "213"
