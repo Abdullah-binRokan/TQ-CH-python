@@ -3,7 +3,6 @@ def longest_alternating_substring(digits: str) -> str:
     # write your code here ^_^
     # define alternating_list to store all alternating substrings
     alternating_list = []
-    last_current_index: int = 0
 
     # call extract_alternating_substrings and store the result in the alternating_list
     extract_alternating_substrings(alternating_list, digits)
@@ -42,7 +41,7 @@ def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
             print("is_odd: ", is_odd(digits[i]))
             print("end_index: ", end_index)
             # call slicing function
-            slice_alternated(start_index, end_index, alternating_list, started_different_than_current)
+            slice_alternated(start_index, end_index, alternating_list, started_different_than_current, digits)
 
             # reset the variables to enable extracting remaining alternating substring
             is_started = False
@@ -56,7 +55,7 @@ def extract_alternating_substrings(alternating_list: list, digits: str) -> None:
         elif digits_length - i == 2 and is_started:
             print("catch ending index: ", i + 1)
             end_index = i + 1
-            slice_alternated(start_index, end_index, alternating_list, started_different_than_current)
+            slice_alternated(start_index, end_index, alternating_list, started_different_than_current, digits)
             i+= 1
         # avoid not having a pair of two elements at the end of list or jumping from alternated pair
         elif digits_length - i == 3 or not are_alternated(digits[i], digits[i + 1]):
@@ -77,7 +76,7 @@ def find_longest_substring(alternating_list: list) -> str:
     return longest_str
 
 # define function to slice the alternated substring 
-def slice_alternated(start_index: int, end_index: int, alternating_list: list, started_different_than_current: bool ):
+def slice_alternated(start_index: int, end_index: int, alternating_list: list, started_different_than_current: bool, digits: str):
     """ slice the alternated substring then append it to the list """
     # include end index since it is only 2 elements
     if end_index - start_index < 2:
@@ -110,7 +109,7 @@ def is_odd(num: str) -> bool:
     int_num: int = int(num)
     return True if int_num % 2 != 0 else False
 
-digits = "2105787220351146"
+# digits = "2105787220351146"
 # digits = "12057872203511461"
 # digits = "12357872203511461"
 # digits = "21457872203511461"
@@ -119,5 +118,14 @@ digits = "2105787220351146"
 # digits = "21"
 # digits = "1"
 # digits = ""
+# digits = '2105787220351146'
+# digits = '1263654081858902'
+# digits = '334090830025543'
+# digits = '6769423178839463'
+
+# digits = "210556789"
+# digits = "224567"
+# digits = "21034"
+digits = "5"
 
 longest_alternating_substring(digits)
