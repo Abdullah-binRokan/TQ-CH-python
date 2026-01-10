@@ -4,20 +4,36 @@ def longest_alternating_substring(digits: str) -> str:
     max_alternating: str = ""
 
     # loop through the numbers from start to len(digits)
-        # initilize current as digits[start]
+    for start in range(len(digits)):
+        # initilize current as start
+        current: int = start
+        print("start: ", start)
 
         # loop from next (start + 1) to len(digits)
-            # if current and next are alternated
-                # assign current as next
-            # else
+        for next in range(start + 1, len(digits)):
+            print("next: ", next)
+            if are_alternated(digits[current], digits[next]):
+                current = next
+            else:                
                 # they are not alternated so break the loop
+                print("****** break at: ", digits[next])
+                break
 
         # if the substring is bigger, assign it to max_alternating
 
     # return max_alternating
 
 
+def are_alternated(current_str: str, next_str: str) -> bool:
+    """ check if two numbers are alternated """
+    current: int = int(current_str)
+    next: int = int(next_str)
 
+    if (current % 2 == 0 and next % 2 != 0) or (current % 2 != 0 and next % 2 == 0):
+        return True
+    else:
+        return False
+    
 
 digits = "2105787220351146"
 # digits = "12057872203511461"
