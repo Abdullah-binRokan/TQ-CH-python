@@ -20,8 +20,15 @@ def longest_alternating_substring(digits: str) -> str:
                 break
 
         # if the substring is bigger, assign it to max_alternating
-
+        current_alternating: str = digits[start:next]
+        print("current_alternating: ", current_alternating)
+        if len(max_alternating) < len(current_alternating):
+            max_alternating = current_alternating
+        print("-------max_alternating: ", max_alternating)
+        
+    print("max_alternating: ", max_alternating)
     # return max_alternating
+    return max_alternating
 
 
 def are_alternated(current_str: str, next_str: str) -> bool:
