@@ -10,6 +10,7 @@ def longest_alternating_substring(digits: str) -> str:
         print("start: ", start)
 
         # loop from next (start + 1) to len(digits)
+        is_breaked: bool = False
         for next in range(start + 1, len(digits)):
             print("next: ", next)
             if are_alternated(digits[current], digits[next]):
@@ -17,10 +18,12 @@ def longest_alternating_substring(digits: str) -> str:
             else:                
                 # they are not alternated so break the loop
                 print("****** break at: ", digits[next])
+                is_breaked = True
                 break
 
+        # check if next reached the final element or breaked
+        current_alternating: str = digits[start:next] if is_breaked else digits[start:next + 1]
         # if the substring is bigger, assign it to max_alternating
-        current_alternating: str = digits[start:next]
         print("current_alternating: ", current_alternating)
         if len(max_alternating) < len(current_alternating):
             max_alternating = current_alternating
@@ -42,13 +45,13 @@ def are_alternated(current_str: str, next_str: str) -> bool:
         return False
     
 
-digits = "2105787220351146"
+# digits = "2105787220351146"
 # digits = "12057872203511461"
 # digits = "12357872203511461"
 # digits = "21457872203511461"
 # digits = "213"
 # digits = "2131"
-# digits = "21"
+digits = "21"
 # digits = "1"
 # digits = ""
 # digits = '2105787220351146'
