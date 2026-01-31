@@ -5,24 +5,25 @@ def longest_alternating_substring(digits: str) -> str:
 
     # loop through the numbers from start to len(digits)
     for start in range(len(digits)):
-        # initilize current as start
+        # initilize current as start and initilaze end
         current: int = start
+        end: int = start
         print("start: ", start)
 
-        # loop from next (start + 1) to len(digits)
+        # loop from end (start + 1) to len(digits)
         is_breaked: bool = False
-        for next in range(start + 1, len(digits)):
-            print("next: ", next)
-            if are_alternated(digits[current], digits[next]):
-                current = next
+        for end in range(start + 1, len(digits)):
+            print("end: ", end)
+            if are_alternated(digits[current], digits[end]):
+                current = end
             else:                
                 # they are not alternated so break the loop
-                print("****** break at: ", digits[next])
+                print("****** break at: ", digits[end])
                 is_breaked = True
                 break
 
-        # check if next reached the final element or breaked
-        current_alternating: str = digits[start:next] if is_breaked else digits[start:next + 1]
+        # check if end reached the final element or breaked
+        current_alternating: str = digits[start:end] if is_breaked else digits[start:end + 1]
         # if the substring is bigger, assign it to max_alternating
         print("current_alternating: ", current_alternating)
         if len(max_alternating) < len(current_alternating):
@@ -34,12 +35,12 @@ def longest_alternating_substring(digits: str) -> str:
     return max_alternating
 
 
-def are_alternated(current_str: str, next_str: str) -> bool:
+def are_alternated(current_str: str, end_str: str) -> bool:
     """ check if two numbers are alternated """
     current: int = int(current_str)
-    next: int = int(next_str)
+    end: int = int(end_str)
 
-    if (current % 2 == 0 and next % 2 != 0) or (current % 2 != 0 and next % 2 == 0):
+    if current % 2 != end % 2:
         return True
     else:
         return False
@@ -51,8 +52,8 @@ def are_alternated(current_str: str, next_str: str) -> bool:
 # digits = "21457872203511461"
 # digits = "213"
 # digits = "2131"
-digits = "21"
-# digits = "1"
+# digits = "21"
+digits = "1"
 # digits = ""
 # digits = '2105787220351146'
 # digits = '1263654081858902'
